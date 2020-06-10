@@ -8,7 +8,7 @@ animation 动画库是设计好的一些动画效果，使用起来更加方便�
 
 #### 1. 获取 animation 动画库
 
-    <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.1/XML/animation/animation.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.4/XML/animation/animation.js"></script>
     
 #### 2. 创建 animation 动画库
 
@@ -26,7 +26,7 @@ clean 方法是拖尾效果，参数 rgba 是透明度设置，也就是拖尾�
     
 - #### 3.2 target 方法
 
-target 方法是绘制动画目标，参数 targetType 是动画目标类型，值分别有 "arc"、"rect"、"image"，参数 targetParam 是动画目标对象，对象的所有 key 如下表：
+target 方法是绘制动画目标，参数 targetType 是动画目标类型，值分别有 "arc"、"rect"、"image"、"polygon"，参数 targetParam 是动画目标对象，对象的所有 key 如下表：
 
 动画目标类型为 "arc" 时；
 
@@ -57,6 +57,14 @@ startX | 在画布上放置图像的 x 坐标位置
 startY | 在画布上放置图像的 y 坐标位置
 radius | 图像的宽度
 sAngle | 图像的高度
+
+动画目标类型为 "polygon" 时；
+
+key | 说明
+:---: | :---:
+startX | 多边形起始的 x 坐标位置
+startY | 多边形起始的 y 坐标位置
+lineToList | 多边形其他顶点坐标数组，它是二次数组类型。比如三角形的其他两个顶点坐标为 [[x1, y1], [x2, y2]]
 
 #### 语法格式
 
@@ -119,7 +127,7 @@ stop 方法是动画停止，参数 requestID 是清除 requestAnimationFrame �
             <button onclick="pause()">暂停</button>
             <button onclick="stop()">停止</button>
             <!-- 获取 animation 动画库 -->
-            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.1/XML/animation/animation.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.4/XML/animation/animation.js"></script>
         </body>
 
         <script>

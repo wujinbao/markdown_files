@@ -68,6 +68,29 @@ Animation.prototype.range = function (targetType, targetParam) {
         }
         if (targetParam.startX + this.vx > canvas.width - targetParam.width || targetParam.startX + this.vx < 0) {
             this.vx = -this.vx
+        } 
+    } else if (targetType == "polygon") {
+        if (targetParam.startY > canvas.height || targetParam.startY < 0) {
+            this.vy = -this.vy
+        } else {
+            for (let i=0; i<targetParam.lineToList.length; i++) {
+                let item = targetParam.lineToList[i]
+                if (item[1] > canvas.height || item[1] < 0) {
+                    this.vy = -this.vy
+                    return this
+                }
+            }
+        }
+        if (targetParam.startX > canvas.width || targetParam.startX < 0) {
+            this.vx = -this.vx
+        } else {
+            for (let i=0; i<targetParam.lineToList.length; i++) {
+                let item = targetParam.lineToList[i]
+                if (item[0] > canvas.width || item[0] < 0) {
+                    this.vx = -this.vx
+                    return this
+                }
+            }
         }
     }
 
@@ -85,9 +108,19 @@ Animation.prototype.target = function (targetType, targetParam, fillStyle) {
 
     // 动画目标初始参数对象
     if (me.state === STATE_INITIAL) {
-        let keys = Object.keys(targetParam)
-        for (let i=0; i<keys.length; i++) {
-            me.targetParam[keys[i]] = targetParam[keys[i]]   
+        if (targetType == "polygon") {
+            me.targetParam.startX = targetParam.startX
+            me.targetParam.startY = targetParam.startY
+            me.targetParam.lineToList = []
+            for (let i=0; i<targetParam.lineToList.length; i++) {
+                let item = targetParam.lineToList[i]
+                me.targetParam.lineToList[i] = [item[0], item[1]]
+            }
+        } else {
+            let keys = Object.keys(targetParam)
+            for (let i=0; i<keys.length; i++) {
+                me.targetParam[keys[i]] = targetParam[keys[i]]
+            }
         }
     }
 
@@ -104,8 +137,14 @@ Animation.prototype.target = function (targetType, targetParam, fillStyle) {
             me.clean()
             context.drawImage(img, targetParam.startX, targetParam.startY, targetParam.width, targetParam.height) // 五参数的情况，图片大小由后两个参数控制
         }
-
         return me
+    } else if (targetType == "polygon") {
+        context.moveTo(targetParam.startX, targetParam.startY)
+        for (let i=0; i<targetParam.lineToList.length; i++) {
+            let item = targetParam.lineToList[i]
+            context.lineTo(item[0], item[1])
+        }
+        context.closePath()
     }
 
     context.fillStyle = fillStyle || me.fillStyle
@@ -135,6 +174,13 @@ Animation.prototype.track = function (vx, vy, targetParam) {
 
     targetParam.startX += this.vx
     targetParam.startY += this.vy
+    if (targetParam.lineToList) {
+        for (let i=0; i<targetParam.lineToList.length; i++) {
+            let item = targetParam.lineToList[i]
+            item[0] += this.vx
+            item[1] += this.vy
+        }
+    }
 
     return this
 }
@@ -178,6 +224,13 @@ Animation.prototype.stop = function (requestID, targetType, targetParam) {
     targetParam.startY = this.targetParam.startY
     this.vx = vx
     this.vy = vy
+
+    if (targetType == "polygon") {
+        for (let i=0; i<targetParam.lineToList.length; i++) {
+            targetParam.lineToList[i][0] = this.targetParam.lineToList[i][0]
+            targetParam.lineToList[i][1] = this.targetParam.lineToList[i][1]
+        }
+    }
 
     this.pause(requestID).clean().target(targetType, this.targetParam)
 
