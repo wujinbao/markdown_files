@@ -31,6 +31,9 @@ function Animation() {
     this.state = STATE_INITIAL
     this.fillStyle = "blue"
     this.targetParam = {} // 动画目标初始参数对象
+    this.frames = 0 // 动画帧数,实现自定义范围处理
+    this.repeatTask = 0 // 任务重复次数
+    this.taskIndex = 0 // 任务队列索引值
 }
 
 /**
@@ -44,6 +47,35 @@ Animation.prototype.clean = function (rgba) {
         context.fillStyle = rgba
         context.fillRect(0, 0, canvas.width, canvas.height)
     }
+
+    return this
+}
+
+/**
+ * 自定义范围处理，通过设置动画帧数来实现
+ * @param  frames  动画帧数，限制运动范围
+ * @param  taskIndex  任务队列索引值
+ * @param  repeatTask  任务重复次数
+ */
+Animation.prototype.customRange = function (frames, taskIndex, repeatTask) {
+    if (taskIndex !== undefined && this.taskIndex !== taskIndex) return this
+
+    if (this.frames === frames) {
+        this.frames = 0
+        this.vy = -this.vy
+        this.vx = -this.vx
+
+        this.repeatTask++
+
+        if (this.repeatTask === repeatTask) {
+            this.repeatTask = 0
+            this.pause(requestID)
+
+            this.taskIndex++
+        }
+    }
+
+    this.frames++
 
     return this
 }
@@ -158,8 +190,11 @@ Animation.prototype.target = function (targetType, targetParam, fillStyle) {
  * @param  vx  动画目标横向移动速度
  * @param  vy  动画目标纵向移动速度
  * @param  targetParam  动画目标参数对象
+ * @param  taskIndex  任务队列索引值
  */
-Animation.prototype.track = function (vx, vy, targetParam) {
+Animation.prototype.track = function (vx, vy, targetParam, taskIndex) {
+    if (taskIndex !== undefined && this.taskIndex !== taskIndex) return this
+
     if (this.vy == -vy) {
         this.vy = -vy
     } else {
@@ -188,8 +223,14 @@ Animation.prototype.track = function (vx, vy, targetParam) {
 /**
  * 开始动画
  * @param  callback  动画重复的回调函数
+ * @param  taskTotal  任务总数
  */
-Animation.prototype.start = function (callback) {
+Animation.prototype.start = function (callback, taskTotal) {
+    if (taskTotal == undefined) {
+        if (this.taskIndex === 1) return this
+    }
+    if (this.taskIndex === taskTotal) return this
+
     if (this.state === STATE_START) {
         cancelAnimationFrame(requestID)
     }
