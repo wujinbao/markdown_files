@@ -88,7 +88,7 @@ range 方法是超出画布范围处理。参数 targetType 是动画目标类�
     
 - #### 3.5 customRange 方法
 
-customRange 方法是自定义范围处理，通过设置动画帧数来实现。参数 frames 是动画帧数，限制运动范围；参数 taskIndex 是任务队列索引值；参数 repeatTask 是任务重复次数。
+customRange 方法是自定义范围处理，通过设置动画帧数来实现。参数 frames 是动画帧数，限制运动范围；参数 taskIndex 是任务队列索引值；参数 repeatTask 是任务重复次数，未设置次数时则为无限循环。
 
 #### 语法格式
 
@@ -137,7 +137,7 @@ stop 方法是动画停止；参数 requestID 是清除 requestAnimationFrame �
             <button onclick="pause()">暂停</button>
             <button onclick="stop()">停止</button>
             <!-- 获取 animation 动画库 -->
-            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.4/XML/animation/animation.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.5/XML/animation/animation.js"></script>
         </body>
 
         <script>
@@ -195,7 +195,7 @@ stop 方法是动画停止；参数 requestID 是清除 requestAnimationFrame �
         <body>
             <canvas id="canvas"></canvas>
             <!-- 获取 animation 动画库 -->
-            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.4/XML/animation/animation.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.5/XML/animation/animation.js"></script>
         </body>
 
         <script>
