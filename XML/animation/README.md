@@ -147,7 +147,7 @@ animation 动画的调用方式是通过链式来调用，先调用 clean 方法
         <body>
             <canvas id="canvas"></canvas>
             <!-- 获取 animation 动画库 -->
-            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.5/XML/animation/animation.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.6/XML/animation/animation.js"></script>
         </body>
 
         <script>
@@ -211,7 +211,7 @@ animation 动画的调用方式是通过链式来调用，先调用 clean 方法
         <body>
             <canvas id="canvas"></canvas>
             <!-- 获取 animation 动画库 -->
-            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.5/XML/animation/animation.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.6/XML/animation/animation.js"></script>
         </body>
 
         <script>
@@ -275,7 +275,7 @@ animation 动画的调用方式是通过链式来调用，先调用 clean 方法
         <body>
             <canvas id="canvas"></canvas>
             <!-- 获取 animation 动画库 -->
-            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.5/XML/animation/animation.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/wujinbao/markdown_files@v8.6/XML/animation/animation.js"></script>
         </body>
 
         <script>
